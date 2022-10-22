@@ -1,0 +1,788 @@
+\documentclass[12pt,a4paper]{article}
+
+% Languages & encoding
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+
+% math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{ifthen}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usetikzlibrary{calc,intersections, quotes, angles}
+
+%
+
+\theoremstyle{definition}
+\newtheorem{aksjomat}{Aksjomat}
+\newtheorem{twierdzenie}{Twierdzenie}[subsection]
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{2cm}
+			
+			% Main title
+			{ \Huge \textbf{Planimetria} } \\
+			\vspace{0.5cm}
+			{ \LARGE część 1 }
+		\end{center}
+		\raggedleft
+			\vspace*{\fill}
+			{ \Large \textbf{Wiktor Persak}}\\
+			{ \large \emph{I Liceum Ogólnokształcące w Bydgoszczy im. Cypriana Kamila Norwida}}
+	\end{titlepage}
+\tableofcontents
+\newpage
+\section{Definicje}
+	\subsection{Odcinek}
+	Odcinkiem o końcach $A$ i $B$ nazywamy zbiór składający z punktu $A$ i $B$ oraz wszystkich punktów leżącymi między punktami $A$ i $B$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (0.5, 0);
+    \coordinate (B) at (1.5, 1.5);	
+	
+	\draw (A) circle [radius=.5pt] node[above left] {$A$} -- (B) circle [radius=.5pt] node[above left] {$B$};
+	
+	\node at (0,0.5) {$\overline{AB}$};
+	\end{tikzpicture}\end{center}
+	%--------------------------------------------------------------
+	\subsection{Półprosta}
+	Jeżeli $A$ i $B$ są różnymi punktami, to półprostą o początku $A$ przechodzącą przez $B$ nazywamy zbiór składający się z punktu $A$ i wszystkich punktów leżących po tej samej stronie punktu $A$ co punkt $B$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (C) at (0.5, 0);
+    \coordinate (B) at (1.5, 1.5);
+    \coordinate (A) at ($(C)!0.5!(B)$);
+	
+	\draw (B) -- (C);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above left] {$A$};
+	\draw[fill] (B) circle [radius=.5pt] node[above left] {$B$};
+	
+	\node[above right] at (0,0.5) {$A\vec B$};
+	
+	\node at (2.2, 0) {$A\vec B \neq B\vec A$};
+	\end{tikzpicture}\end{center}	
+	
+	%--------------------------------------------------------------
+	\subsection{Proste równoległe}
+	Dwie proste $k$ i $l$ nazywamy równoległymi, wtedy i tylko wtedy, gdy nie mają żadnego punktu wspólnego lub gdy są równe.
+	\begin{center}
+	\begin{tikzpicture}[scale=2]
+	
+	%1)
+	\draw (0,0) node[above left] {$k$} -- +(1,1.5);
+	
+	\draw (.5,0) node[above left] {$l$} -- +(1,1.5);
+	
+	\node at (1.6,0) {$k\parallel l$};
+	
+	%2)
+	\draw (3.5,0) node[above left] {$l$} -- +(1, 1.5);
+	\node[above left] at ($(3.5,0)!0.2!(4.5, 1.5)$) {$k$};
+	
+	\node at (4.7,0) {$k\parallel l$};
+	
+	%3)
+	\draw (6,0) node[above left] {$k$} -- (7.1, 1.5);
+	\draw (6, 1.5) node[above right] {$l$} -- (7.2, 0);
+	
+	\node at (7.5, 0) {$k\nparallel l$};
+	\end{tikzpicture}
+	\end{center}	
+	
+	%--------------------------------------------------------------
+	\subsection{Odległość}
+	
+	Liczbę $|\overline{AB}|$ nazywamy odległością odcinka $\overline{AB}$ albo odległością między punktami $A$ i  $B$.\\
+	$AB=d(A,\ B)$ - odległość między punktami $A$ i $B$
+	
+	%--------------------------------------------------------------
+	\subsection{Łamana}
+	Dane są punkty:
+	$A_1,\ A_2,\ A_3,\ ...,\ A_{n-1},\ A_n$.\\
+	Łamaną nazywamy figurę złożoną  z odcinków  $\overline{A_1A_2},\  \overline{A_2A_3},\ ...,\ \overline{A_{n-1}A_n}$.
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A5) at (0, 1.5);
+	\coordinate (A4) at (1, 1.4);
+	\coordinate (A3) at (1.1,.6);
+	\coordinate (A2) at (.7,0);
+	\coordinate (A1) at (.1,.3);
+	
+	\draw[fill] (A1) circle [radius=.5pt] node[below left] {$A_1$};
+	\draw[fill] (A2) circle [radius=.5pt] node[below right] {$A_2$};
+	\draw[fill] (A3) circle [radius=.5pt] node[above right] {$A_3$};
+	\draw[fill] (A4) circle [radius=.5pt] node[above right] {$A_4$};
+	\draw[fill] (A5) circle [radius=.5pt] node[above left] {$A_5$};
+	
+	\draw (A1) -- (A2) -- (A3) -- (A4) -- (A5);
+	\end{tikzpicture}\end{center}
+	
+	Łamaną nazywamy zamkniętą, gdy $A_1$=$A_n$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (B1) at (0, 1.5);
+	\coordinate (B2) at (1, 1.4);
+	\coordinate (B3) at (0, 0);
+	\coordinate (B4) at (1, 0);
+	
+	\draw (B1) -- (B2) -- (B3) -- (B4) -- (B1);
+	
+	\draw[fill] (B1) circle [radius=.5pt] node[above left] {$B_1=B_5$};
+	\draw[fill] (B2) circle [radius=.5pt] node[above right] {$B_2$};
+	\draw[fill] (B3) circle [radius=.5pt] node[below right] {$B_3$};
+	\draw[fill] (B4) circle [radius=.5pt] node[below right] {$B_4$};
+	\end{tikzpicture}\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Wielokąt}
+	Wielokątem nazywamy część płaszczyzny ograniczoną łamaną zamkniętą wraz z tą łamaną.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A5) at (0, 1.4);
+	\coordinate (A4) at (1, 1.5);
+	\coordinate (A3) at (.5,.6);
+	\coordinate (A2) at (.8,0);
+	\coordinate (A1) at (.1,.3);
+	
+	\draw[fill] (A1) circle [radius=.5pt] node[below left] {$A_1$};
+	\draw[fill] (A2) circle [radius=.5pt] node[below right] {$A_2$};
+	\draw[fill] (A3) circle [radius=.5pt] node[above right] {$A_3$};
+	\draw[fill] (A4) circle [radius=.5pt] node[above right] {$A_4$};
+	\draw[fill] (A5) circle [radius=.5pt] node[above left] {$A_5$};
+
+	\draw[fill=gray] (A1) -- (A2) -- (A3) -- (A4) -- (A5) -- (A1);
+	\end{tikzpicture}\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Okrąg}
+	Okręgiem o środku $O$ i promieniu $r$ nazywamy zbiór punkt płaszczyzny, których odległość od punktu $O$ wynosi $r$.
+	\begin{equation*}
+	o(O,r)=\{X\in\Pi:OX = r\}
+	\end{equation*}
+	
+	%--------------------------------------------------------------
+	\subsection{Koło}
+	Kołem o środku $O$ i promieniu $r$ nazywamy zbiór punktów płaszczyzny, których odległość od środka jest mniejsza bądź równa $r$.
+	\begin{equation*}
+	o(O,r)=\{X\in\Pi:OX\le r\}
+	\end{equation*}
+	
+	%--------------------------------------------------------------
+	\subsection{Kąt}
+	Kątem nazywamy dwie półproste o wspólnym początku wraz z jednym z dwóch obszarów, na które te półproste dzielą płaszczyznę.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	%1)
+	\coordinate (A) at (1.5, 1.5);
+	\coordinate (B) at (0, 1.4);
+	\coordinate (C) at (1, 0);
+	
+	\draw (A) -- (B) -- (C);
+	
+	\foreach \i in {100,90,...,10}
+	{
+		\draw[color=red] ($(A)!0.01*\i!(B)$) -- ($(C)!0.01*\i!(B)$);
+	}
+	
+	%2)
+	\coordinate (PP) at (4.8, 1.5);
+	\coordinate (S) at (3.5, 1);
+	\coordinate (QQ) at (4.8, 0);
+	\coordinate (P) at ($(PP)!.5!(S)$);
+	\coordinate (Q) at ($(QQ)!.5!(S)$);
+	
+	\draw[fill] (P) circle [radius=.5pt] node[above right] {$P$};
+	\draw[fill] (S) circle [radius=.5pt] node[above left] {$S$};
+	\draw[fill] (Q) circle [radius=.5pt] node[above right] {$Q$};
+	
+	\draw (PP) -- (S) -- (QQ);
+	
+	\pic[draw, -, angle radius = .75cm] {angle=P--S--Q};
+	
+	\node at (3.5, 0) {$\sphericalangle PSQ$};
+	
+	%3)
+	\coordinate (AA) at (7.8, 1.5);
+	\coordinate (O) at (6.5, 1.3);
+	\coordinate (BB) at (7.8, 0.1);
+	\coordinate (A) at ($(AA)!.5!(O)$);
+	\coordinate (B) at ($(BB)!.5!(O)$);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above right] {$A$};
+	\draw[fill] (O) circle [radius=.5pt] node[above left] {$O$};
+	\draw[fill] (B) circle [radius=.5pt] node[above right] {$B$};
+	
+	
+	\draw (AA) -- (O) -- (BB);
+	\pic[draw, -, angle radius = .75cm] {angle=A--O--B};
+	
+	\node at (6.5, 0) {$\sphericalangle AOB$};
+
+		
+	\draw [<-] ($(A)+(.1,.1)$) -- +(-.1,.5) node[above] {ramię};
+	\draw [<-] ($(B)+(.1,-.1)$) -- +(.1,-.5) node[below] {ramię};
+	\draw [<-] ($(O)+(-.1,.1)$) -- +(-.2, .4) node[above] {wierzchołek};
+	
+	\end{tikzpicture}\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Proste prostopadłe}
+	Proste, które przecinają się pod kątem prostym nazywamy prostopadłymi.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\draw (1,1) node[left] {$l$} coordinate (l) -- ++(0, -2);
+	\draw (0,0) node[above] {$k$} -- ++(2, 0) coordinate (k1);
+	
+
+	\coordinate (root) at (1,0);
+	\pic[draw, -, angle radius = .75cm] {angle=k1--root--l};
+	\draw[fill] (1.12,.12) circle [radius=.5pt];
+	
+	
+	\node at (.15, -.8) {$l\perp k$};
+	
+	\end{tikzpicture}\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Przekątna}
+	Przekątną wielokąta jest odcinkiem wielokąta łączącym wierzchołki wielokąta, który nie jest bokiem.
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (1,1);
+	\coordinate (B) at (1.7,0);
+	\coordinate (C) at (1.3,-1);
+	\coordinate (D) at (0,0);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above] {$A$} 
+	-- (B) circle [radius=.5pt] node[right] {$B$} 
+	-- (C) circle [radius=.5pt] node[below] {$C$} 
+	-- (D) circle [radius=.5pt] node[left] {$D$} 
+	-- (A);
+	
+	\draw[red] (A) -- (C) (D) -- (B);
+
+	\end{tikzpicture}\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Figura wypukła}
+	Figurę nazywamy wypukłą, wtedy i tylko wtedy, gdy każdy odcinek o końcach w tej figurze zawiera się w tej figurze.\\
+	Figura $F$ jest wypukła wtedy i tylko wtedy, gdy $ \displaystyle{\mathop{\forall}_{A, B}}  (A, B \in F \implies \overline{AB} \subset C)$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	
+	\coordinate (A) at (0,0);
+	\coordinate (B)	at (1,1.5);
+	\coordinate (C)	at (1.7,0);
+	\coordinate (D)	at (1,.5);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above left] {$A$}
+	-- (B) circle [radius=.5pt] node[above] {$B$}
+	-- (C) circle [radius=.5pt] node[above right] {$C$}
+	-- (D) circle [radius=.5pt] node[above] {$D$}
+	-- (A);
+	
+	\coordinate (A') at ($(A)!.5!(D)$);
+	\coordinate (C') at ($(C)!.5!(D)$);
+	
+	\draw[red, fill] ($(A')+(0,.1)$) circle [radius=.5pt]
+	-- ($(C')+(0,.1)$) circle [radius=.5pt];
+	
+	\draw[red] ($(A)!.5!(C)$) node[below] {\textbf{nie jest wypukły}!!!};
+	\end{tikzpicture}\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Odległości punktu od prostej}
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (l1) at (0,1.5);	
+	\coordinate (l2) at (1.7,0);
+	\draw (l1) node[above] {$l$}  -- (l2);
+	
+	\coordinate (P) at ($(l1)!0.95!(l2) + (0,1)$);
+	\coordinate (Q) at ($(l1)!(P)!(l2)$);
+	
+	
+	\draw[fill] (P) circle [radius=.5pt] node[above] {$P$} 
+	-- (Q) circle [radius=.5pt] node[above] {$Q$};
+	
+	\node at (0,0) {$\overline{PQ}\perp l$};
+	
+	\end{tikzpicture}\end{center}
+	
+	Odległością od punktu P od prostej l nazywamy długość odcinka $\overline{PQ}$.
+	
+	\begin{equation*}
+	d(P,\ l)=PQ
+	\end{equation*}
+	
+	%--------------------------------------------------------------
+	\subsection{Kąt przyległy}
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (l1) at (0,0);
+	\coordinate (l2) at (2,0);
+	
+	\coordinate (k1) at ($(l1)!.3!(l2)+(0,.9)$);
+	\coordinate (k2) at ($(l1)!.7!(l2)$);
+	
+	\draw (l1) -- (l2) (k1) -- (k2);
+	\draw[fill] (k2) circle [radius=.5pt];
+	
+
+	\pic[draw,-, angle radius = .9cm] {angle=l2--k2--l1};
+
+	
+	\node at ($(k2)+(.09,.15)$) {$\alpha$};
+	\node at ($(k2)+(-.25,.11)$) {$\beta$};
+	
+	\end{tikzpicture}\end{center}
+	
+	\begin{align*}
+	\alpha, \beta \text{- kąty przyległe} \\
+	\alpha + \beta = 180^{\circ}
+	\end{align*}
+	
+	%--------------------------------------------------------------
+	\subsection{Kąta zewnętrznego}
+	Kątem zewnętrznym wielokąta wypukłego nazywamy każdy kąt przyległy do kąta wewnętrznego tego wielokąta.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+
+		% B points
+        \coordinate (B1) at (0,-1.4);
+        \coordinate (B2) at (2,2);
+
+        % C points
+
+        \coordinate (C1) at (1.6,1.8);
+        \coordinate (C2) at (2,-1.2);
+
+        \coordinate (B) at (intersection of B1--B2 and C1--C2);
+        \draw[fill] (B) circle [radius=.5pt];
+
+        % A points
+
+        \coordinate (A1) at (2.2,-.6);
+        \coordinate (A2) at (0,-1);
+
+        \coordinate (C) at (intersection of C1--C2 and A1--A2);
+        \draw[fill] (C) circle[radius=.5pt];
+
+        \coordinate (A) at (intersection of A1--A2 and B1--B2);
+        \draw[fill] (A) circle[radius=.5pt];
+
+        \draw (B1) -- (B2) (C1) -- (C2) (A1) -- (A2);
+
+        % descriptions
+        % at B 
+
+        \node[color=red] at ($(B)+(-.1,.05)$) {$\beta^\prime$};
+        \node[color=red] at ($(B)+(.1,0)$) {$\beta^\prime$};
+        \node at ($(B)+(-.05,-.3)$) {$\beta$};
+
+        \pic[draw, -, angle radius = .5cm] {angle=C--B--B2};
+        \pic[draw,-, angle radius=.5cm] {angle=C1--B--A};
+
+
+        % at C
+        \node[color=blue] at ($(C)+(.1,.1)$) {$\gamma^\prime$};
+        \node[color=blue] at ($(C)+(-.1,-.1)$) {$\gamma^\prime$};
+        \node[above left] at (C) {$\gamma$};
+
+        \pic[draw, -, angle radius = .5cm] {angle=A1--C--B};
+        \pic[draw, -, angle radius = .5cm] {angle=A--C--C2};
+
+        % at A
+        \node[color=green] at ($(A)+(-.075,.15)$) {$\alpha^\prime$};
+        \node[color=green] at ($(A)+(.1,-.1)$) {$\alpha^\prime$};
+        \node[above right] at (A) {$\alpha$};
+
+        \pic[draw, -, angle radius = .5cm] {angle=B1--A--C};
+        \pic[draw, -, angle radius = .5cm] {angle=B--A--A2};
+	\end{tikzpicture}\end{center}	
+	
+	%--------------------------------------------------------------
+	\subsection{Trójkątów przystających}
+	Dwa trójkąty nazywamy przystającymi, wtedy i tylko wtedy, gdy mają takie same miary kątów i długości boków.
+	\begin{equation*}
+	\Delta {ABC} \equiv \Delta {A^\prime B^\prime C^\prime}
+	\end{equation*}
+	Cechy przystawania trójkątów:
+	\begin{itemize}
+	
+	\item bok-bok-bok(BBB):\\
+	Jeżeli $AB=A^\prime B^\prime,\ BC=B^\prime C^\prime,\ AC=A^\prime C^\prime $ to $  \Delta ABC\equiv \Delta A^ \prime B^\prime C^\prime$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (2,1);	
+	\coordinate (B) at (1,2);	
+	\coordinate (C) at (0,0);
+	
+	\draw[color = yellow] (B) -- (A);
+	\draw[color = green] (A) -- (C);
+	\draw[color = red] (B) -- (C);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above right] {$A$}
+	(B) circle [radius=.5pt] node[above right] {$B$}
+	(C) circle [radius=.5pt] node[below right] {$C$};
+	% -----
+	
+	\coordinate (A') at (4,-.2);	
+	\coordinate (B') at (3,1);	
+	\coordinate (C') at (5,2);
+	
+	\draw[color = yellow] (B') -- (A');
+	\draw[color = green] (A') -- (C');
+	\draw[color = red] (B') -- (C');	
+	
+	
+	\draw[fill] (A') circle [radius=.5pt] node[above right] {$A^\prime$}
+	(B') circle [radius=.5pt] node[above left] {$B^\prime$}
+	(C') circle [radius=.5pt] node[below right] {$C^\prime$};
+	\end{tikzpicture}\end{center}
+	
+	\item bok-kąt-bok(BKB):\\
+	Jeżeli $AB=A^\prime B^\prime,\ AC=A^\prime C^\prime,\ \sphericalangle A=\sphericalangle A^\prime$ to $\Delta ABC \equiv A^\prime B^\prime C^\prime$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (2,1);	
+	\coordinate (B) at (1,2);	
+	\coordinate (C) at (0,0);
+	
+	\draw[color = yellow] (B) -- (A);
+	\draw[color = green] (A) -- (C);
+	\draw (B) -- (C);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above right] {$A$}
+	(B) circle [radius=.5pt] node[above right] {$B$}
+	(C) circle [radius=.5pt] node[below right] {$C$};
+	
+	\pic[draw, color=red,-, angle radius = .5cm] {angle=B--A--C};
+	% -----
+	
+	\coordinate (A') at (4,-.2);	
+	\coordinate (B') at (3,1);	
+	\coordinate (C') at (5,2);
+	
+	\draw[color = yellow] (B') -- (A');
+	\draw[color = green] (A') -- (C');
+	\draw (B') -- (C');	
+	
+	
+	\draw[fill] (A') circle [radius=.5pt] node[above right] {$A^\prime$}
+	(B') circle [radius=.5pt] node[above left] {$B^\prime$}
+	(C') circle [radius=.5pt] node[below right] {$C^\prime$};
+	
+	\pic[draw, color=red,-, angle radius = .5cm] {angle=C'--A'--B'};
+	\end{tikzpicture}\end{center}
+	
+	\item kąt-bok-kąt(KBK):\\
+	Jeżeli $AB=A^\prime B^\prime,\ \sphericalangle A=\sphericalangle A^\prime,\ \sphericalangle B=\sphericalangle B^\prime $ to $\Delta ABC\equiv\Delta A^\prime B^\prime C^\prime$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (2,1);	
+	\coordinate (B) at (1,2);	
+	\coordinate (C) at (0,0);
+	
+	\draw[color = yellow] (B) -- (A);
+	\draw (A) -- (C);
+	\draw (B) -- (C);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[above right] {$A$}
+	(B) circle [radius=.5pt] node[above right] {$B$}
+	(C) circle [radius=.5pt] node[below right] {$C$};
+	
+	\pic[draw, color=green,-, angle radius = .5cm] {angle=B--A--C};
+	\pic[draw, color=red,-, angle radius = .5cm] {angle=C--B--A};
+	% -----
+	
+	\coordinate (A') at (4,-.2);	
+	\coordinate (B') at (3,1);	
+	\coordinate (C') at (5,2);
+	
+	\draw[color = yellow] (B') -- (A');
+	\draw (A') -- (C');
+	\draw (B') -- (C');	
+	
+	
+	\draw[fill] (A') circle [radius=.5pt] node[above right] {$A^\prime$}
+	(B') circle [radius=.5pt] node[above left] {$B^\prime$}
+	(C') circle [radius=.5pt] node[below right] {$C^\prime$};
+	
+	\pic[draw, color=green,-, angle radius = .5cm] {angle=C'--A'--B'};
+	\pic[draw, color=red,-, angle radius = .5cm] {angle=A'--B'--C'};
+	\end{tikzpicture}\end{center}
+	
+	\end{itemize}
+	
+	%--------------------------------------------------------------
+	\subsection{Symetralna odcinka}
+	Symetralną niezerowego odcinka nazywamy prostą prostopadłą do tego odcinka przechodzącą przez jego środek.
+	
+	%--------------------------------------------------------------
+	\subsection{Środkowa boku}
+	Środkową boku nazywamy odcinek łączący wierzchołek z środkiem przeciwległego boku. 
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	
+	\coordinate (A) at (0,-.2);
+	\coordinate (B) at (2,0);
+	\coordinate (C) at (1,1.2);
+	
+	\coordinate (C') at ($(A)!.5!(B)$);
+	
+	
+	
+	\draw (A) -- (B) -- (C)	-- (A);
+	
+	\draw[fill] (A) circle [radius=.5pt] node[below right] {$A$}
+	(B) circle [radius=.5pt] node[below right] {$B$}
+	(C) circle [radius=.5pt] node[above left] {$C$};
+	
+	\draw[color=green] (C) -- (C');
+	\draw[fill] (C') circle [radius=.5pt] node[below] {$C^\prime$};
+	
+	\end{tikzpicture}\end{center}
+	\begin{align*}
+	C^\prime \text{- środek odcinka AB} \\
+	CC^\prime \text{- środekowa odcinka AB}
+	\end{align*}
+	
+	%--------------------------------------------------------------
+	\subsection{Okrąg opisany}
+	Okręgiem opisanym na wielokącie nazywamy okrąg do którego należą wszystkie wierzchołki tego wielokąta.
+	
+	%--------------------------------------------------------------
+	\subsection{Kąt środkowy}
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	
+	\coordinate (O) at (0,0);
+	\def\radius{1cm};
+	
+	\draw (O) circle[radius = \radius];
+	\draw[fill] (O) circle [radius=.5pt] node[above right] {$O$};
+	
+	\fill[fill] (O)++(230:\radius) circle[radius=.5pt] coordinate (A) circle [radius=.5pt] node[above] {$A$}
+	(O)++(290:\radius) circle[radius=.5pt] coordinate (B) circle [radius=.5pt] node[above] {$B$};
+	
+	\draw (A) -- (O) -- (B);
+
+	
+	\pic[draw,-, angle radius = .5cm] {angle=A--O--B};
+	
+	\end{tikzpicture}
+	\\Kąt $\sphericalangle AOB$ jest środkowy.
+	\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Kąt wpisany}
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	
+	\coordinate (O) at (0,0);
+	\def\radius{1cm};
+	
+	\draw (O) circle[radius = \radius];
+	\draw[fill] (O) circle [radius=.5pt] node[above right] {$O$};
+	
+	\fill[fill] (O)++(230:\radius) circle[radius=.5pt] coordinate (A) circle [radius=.5pt] node[above] {$A$}
+	(O)++(290:\radius) circle[radius=.5pt] coordinate (B) circle [radius=.5pt] node[above right] {$B$}
+	(O)++(70:\radius) circle[radius=.5pt] coordinate (C) circle [radius=.5pt] node[above] {$C$};
+	
+	\draw (A) -- (C) -- (B);
+
+	
+	\pic[draw,-, angle radius = .5cm] {angle=A--C--B};
+	
+	\end{tikzpicture}
+	\\Kąt $\sphericalangle ACB$ jest wpisany.
+	\end{center}
+	
+	%--------------------------------------------------------------
+	\subsection{Okrąg opisany}
+	Okręgiem wpisanym w wielokąt wypukły nazywamy okrąg, który jest styczny do wszystkich prostych zawierających boki wielokąta, którego środek jest wewnątrz wielokąta.
+	
+	%--------------------------------------------------------------
+	\subsection{Podobieństwa trójkątów}
+	Dwa trójkąty nazywamy podobnym, jeżeli mają równe kąty i boki jednego trójkąta są proporcjonalne do odpowiednich boków drugiego trójkąta
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (1,0);
+	\coordinate (C) at (.5, 1);
+	
+	\def\displacement{2};
+	\coordinate (A') at (0+\displacement,0);
+	\coordinate (B') at (2+\displacement,0);
+	\coordinate (C') at (1+\displacement,2);
+	
+	\node at ($(B)+(-.15,.1)$) {$\beta$};
+	\node[above right] at (A) {$\alpha$};
+	\node[below] at (C) {$\gamma$};
+	\node[left] at ($(A)!.5!(C)$) {$b$};
+	\node[right] at ($(B)!.5!(C)$) {$a$};
+	\node[below] at ($(A)!.5!(B)$) {$c$};
+	
+	\node at ($(B')+(-.15,.1)$) {$\beta$};
+	\node[above right] at (A') {$\alpha$};
+	\node[below] at (C') {$\gamma$};
+	\node[left] at ($(A')!.5!(C')$) {$2b$};
+	\node[right] at ($(B')!.5!(C')$) {$2a$};
+	\node[below] at ($(A')!.5!(B')$) {$2c$};
+	
+	
+	\draw[color = yellow] (B) -- (A);
+	\draw[color = green] (A) -- (C);
+	\draw[color = red] (C) -- (B);
+	
+	\draw[color = yellow] (B') -- (A');
+	\draw[color = green] (A') -- (C');
+	\draw[color = red] (C') -- (B');
+	
+	\draw[fill]
+	(A) circle[radius=.5pt] node[below left] {$A$}
+	(B) circle[radius=.5pt] node[below right] {$B$}
+	(C) circle[radius=.5pt] node[above right] {$C$}
+	(A') circle[radius=.5pt] node[below left] {$A^\prime$}
+	(B') circle[radius=.5pt] node[below right] {$B^\prime$}
+	(C') circle[radius=.5pt] node[above right] {$C^\prime$};
+	\end{tikzpicture}\end{center}
+	
+	$\Delta ABC \sim \Delta A^\prime B^\prime C^\prime$	
+	{\noindent Cechy podobieństwa trójkątów:}
+	
+	\begin{itemize}
+	\item bok-bok-bok(BBB):\\
+	Jeżeli $\frac{AB}{A^\prime B^\prime}=\frac{BC}{B^\prime C^\prime}=\frac{CA}{C^\prime A^\prime}$, to $ \Delta ABC \sim \Delta A^\prime B^\prime C^\prime.$
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (1,0);
+	\coordinate (C) at (.5, 1);
+	
+	\def\displacement{2};
+	\coordinate (A') at (0+\displacement,0);
+	\coordinate (B') at (2+\displacement,0);
+	\coordinate (C') at (1+\displacement,2);
+	
+	\node[left] at ($(A)!.5!(C)$) {$b$};
+	\node[right] at ($(B)!.5!(C)$) {$a$};
+	\node[below] at ($(A)!.5!(B)$) {$c$};
+	
+	\node[left] at ($(A')!.5!(C')$) {$2b$};
+	\node[right] at ($(B')!.5!(C')$) {$2a$};
+	\node[below] at ($(A')!.5!(B')$) {$2c$};
+	
+	
+	\draw[color = yellow] (B) -- (A);
+	\draw[color = green] (A) -- (C);
+	\draw[color = red] (C) -- (B);
+	
+	\draw[color = yellow] (B') -- (A');
+	\draw[color = green] (A') -- (C');
+	\draw[color = red] (C') -- (B');
+	
+	\draw[fill]
+	(A) circle[radius=.5pt] node[below left] {$A$}
+	(B) circle[radius=.5pt] node[below right] {$B$}
+	(C) circle[radius=.5pt] node[above right] {$C$}
+	(A') circle[radius=.5pt] node[below left] {$A^\prime$}
+	(B') circle[radius=.5pt] node[below right] {$B^\prime$}
+	(C') circle[radius=.5pt] node[above right] {$C^\prime$};
+	\end{tikzpicture}\end{center}
+	
+	$\frac{AB}{A^\prime B^\prime}=\frac{BC}{B^\prime C^\prime}=\frac{CA}{C^\prime A^\prime}=\frac{1}{2}$\\
+	Wówczas:\\
+	$\Delta ABC \sim \Delta A^\prime B^\prime C^\prime$
+	
+	\item bok-kąt-bok(BKB):
+	Jeżeli  $\frac{AB}{A^\prime B^\prime}=\frac{CA}{C^\prime A^\prime}$ oraz $\sphericalangle A= \sphericalangle A^\prime$, to $\Delta ABC \sim \Delta A^\prime B^\prime C^\prime$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (1,0);
+	\coordinate (C) at (.5, 1);
+	
+	\def\displacement{2};
+	\coordinate (A') at (0+\displacement,0);
+	\coordinate (B') at (2+\displacement,0);
+	\coordinate (C') at (1+\displacement,2);
+	
+	\node[above right, color = red] at (A) {$\alpha$};
+	\node[left] at ($(A)!.5!(C)$) {$b$};
+	\node[below] at ($(A)!.5!(B)$) {$c$};
+	
+	\node[above right, color = red] at (A') {$\alpha$};
+	\node[left] at ($(A')!.5!(C')$) {$2b$};
+	\node[below] at ($(A')!.5!(B')$) {$2c$};
+	
+	
+	\draw[color = yellow] (B) -- (A);
+	\draw[color = green] (A) -- (C);
+	\draw (C) -- (B);
+	
+	\draw[color = yellow] (B') -- (A');
+	\draw[color = green] (A') -- (C');
+	\draw (C') -- (B');
+	
+	\draw[fill]
+	(A) circle[radius=.5pt] node[below left] {$A$}
+	(B) circle[radius=.5pt] node[below right] {$B$}
+	(C) circle[radius=.5pt] node[above right] {$C$}
+	(A') circle[radius=.5pt] node[below left] {$A^\prime$}
+	(B') circle[radius=.5pt] node[below right] {$B^\prime$}
+	(C') circle[radius=.5pt] node[above right] {$C^\prime$};
+	\end{tikzpicture}\end{center}	
+	
+	\item kąt-kąt(KK):\\
+	Jeżeli $\sphericalangle A=\sphericalangle A^\prime$ oraz $\sphericalangle B=\sphericalangle B^\prime$, to $\Delta ABC \sim \Delta A^\prime B^\prime C^\prime$.
+	
+	\begin{center}\begin{tikzpicture}[scale=2]
+	\coordinate (A) at (0,0);
+	\coordinate (B) at (1,0);
+	\coordinate (C) at (.5, 1);
+	
+	\def\displacement{2};
+	\coordinate (A') at (0+\displacement,0);
+	\coordinate (B') at (2+\displacement,0);
+	\coordinate (C') at (1+\displacement,2);
+	
+	\node[color = green] at ($(B)+(-.15,.1)$) {$\beta$};
+	\node[above right, color = red] at (A) {$\alpha$};
+
+	\node[color = green] at ($(B')+(-.15,.1)$) {$\beta$};
+	\node[above right, color = red] at (A') {$\alpha$};
+	
+	\draw (A) -- (B) -- (C) -- (A)
+	(A') -- (B') -- (C') -- (A');
+	
+	\draw[fill]
+	(A) circle[radius=.5pt] node[below left] {$A$}
+	(B) circle[radius=.5pt] node[below right] {$B$}
+	(C) circle[radius=.5pt] node[above right] {$C$}
+	(A') circle[radius=.5pt] node[below left] {$A^\prime$}
+	(B') circle[radius=.5pt] node[below right] {$B^\prime$}
+	(C') circle[radius=.5pt] node[above right] {$C^\prime$};
+	\end{tikzpicture}\end{center}
+	
+	\end{itemize}
+\newpage
+\section{Aksjomaty}
+
+	%--------------------------------------------------------------
+	\aksjomat Przez dwa różne punkty przechodzi dokładnie jedna prosta.
+
+	
+\end{document}

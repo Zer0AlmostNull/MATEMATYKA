@@ -1,0 +1,442 @@
+\documentclass[12pt,a4paper,fleqn]{article}
+
+% Languages & encoding
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+
+% math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{ifthen}
+
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usetikzlibrary{calc,intersections, quotes, angles}
+
+\DeclareMathOperator{\tg}{tg}
+\newcommand{\tgx}{\tg x}
+
+\DeclareMathOperator{\ctg}{ctg}
+\newcommand{\ctgx}{\ctg x}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\begin{document}
+\begin{titlepage}
+		\begin{center}
+			\vspace*{2cm}
+			
+			% Main title
+			{ \Huge \textbf{Trygonometria} } \\
+			\vspace{0.5cm}
+			%{ \LARGE część 1 }
+		\end{center}
+		\raggedleft
+			\vspace*{\fill}
+			{ \Large \textbf{Wiktor Persak}}\\
+			{ \large \emph{I Liceum Ogólnokształcące w Bydgoszczy im. Cypriana Kamila Norwida}}
+	\end{titlepage}
+\tableofcontents
+\newpage
+
+\section{Tożsamości Trygonometryczne}
+	\subsection{Sinus sumy dwóch kątów}
+		\begin{equation*}
+			\sin (\alpha +\beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta
+		\end{equation*}
+		\underline{Dowód:} 
+		\begin{center}\begin{tikzpicture}[scale=3]
+	
+			\coordinate (A) at (0, 0);
+			\coordinate (B) at (2, 0);
+			\coordinate (C) at (.7, 1.5);
+			\coordinate (D) at ($(A)!(C)!(B)$);
+			
+			\draw[fill] (A) circle [radius=.5pt] node[below] {$A$};
+			\draw[fill] (B) circle [radius=.5pt] node[below] {$B$};
+			\draw[fill] (C) circle [radius=.5pt] node[above right] {$C$};
+			\draw[fill] (D) circle [radius=.5pt] node[below] {$D$};
+			
+		
+			\draw (A)--(B)--(C)--(A);
+			\node[above right] at ($(C)!0.5!(B)$) {$a$};
+			\node[above left] at ($(C)!0.5!(A)$) {$b$};
+			
+			\draw (C) -- (D);
+			\node[right] at ($(C)!.5!(D)$) {$h$};
+			
+			\pic[draw, -, angle radius = .5cm] {angle=C--D--A};
+			\pic[draw, -, angle radius = .8cm] {angle=D--C--B};
+			\pic[draw, -, angle radius = .8cm] {angle=A--C--D};		
+			
+			\node[below right] at ($(C)+ (-.02, -.07)$) {$\beta$};
+			\node[below left] at ($(C)+ (0.05, -.1)$) {$\alpha$};
+			
+			\draw[fill]($(D) + (-0.08,0.08)$) circle [radius=.5pt];
+			
+	
+		\end{tikzpicture}\end{center}
+		\noindent
+		\begin{align*}
+			&[ABC] = \frac{1}{2} ab\sin(\alpha+\beta)\\
+			&[ADC] = \frac{1}{2} bh\sin\alpha\\
+			&[DBC] = \frac{1}{2} ah\sin\beta
+		\end{align*}
+		Z $\Delta ADC$ i $\Delta BDC:$\\
+		
+		$\cos \alpha = \frac{h}{b} $  oraz  $ \cos\beta = \frac{h}{a}$\\
+		Stąd\\
+		
+		$h=b\cos\alpha$  i  $h=a\cos\beta$\\
+		Czyli
+		\noindent
+		\begin{align*}
+			&[ABC] = [ADC] + [BDC]\\
+			&\frac{1}{2} ab\sin(\alpha+\beta)= \frac{1}{2} bh\sin\alpha + \frac{1}{2} ah\sin\beta\\
+			&\frac{1}{2} ab\sin(\alpha+\beta) = \frac{1}{2} ba\cos\beta\sin\alpha + \frac{1}{2} ab\cos\alpha\sin\beta\\	
+			&\sin (\alpha +\beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta.
+		\end{align*}
+		
+		c.n.d.
+
+%--------------------------------------------------------------
+	\newpage
+	\subsection{Cosinus sumy dwóch kątów}
+		\begin{equation*}
+			\cos (\alpha + \beta) = \cos\alpha\cos\beta - \sin\alpha\sin\beta
+		\end{equation*}
+		\underline{Dowód:}\noindent
+		\begin{align*}
+			\cos (\alpha + \beta ) &= \sin (90^\circ-(\alpha + \beta))=\\
+									&= \sin (90^\circ - \alpha -\beta )=\\
+									&= \sin ((90^\circ -\alpha)+(-\beta))=\\
+									&= \sin(90^\circ -\alpha)cos(-\beta) + \cos(90^\circ-\alpha)\sin(-\beta)=\\
+									&= \cos\alpha\cos\beta - sin\alpha\sin\beta.
+		\end{align*}
+		c.n.d.
+%--------------------------------------------------------------
+		\subsection{Tangens sumy dwóch kątów}
+		\begin{equation*}
+			\tg (\alpha + \beta) = \frac{\tg \alpha + \tg \beta}{1 - \tg \alpha \tg \beta}
+		\end{equation*}
+		
+		\underline{Dowód:}\noindent
+		\begin{align*}
+			\tg (\alpha + \beta) &= \frac{\sin(\alpha + \beta)}{\cos(\alpha+\beta)} = \\
+								 &= \frac{\sin\alpha\cos\beta + \cos\alpha\sin\beta}{\cos\alpha\cos\beta-\sin\alpha\sin\beta} =\\
+								 &= \frac{\frac{\sin\alpha\cos\beta + \cos\alpha\sin\beta}{\cos\alpha\cos\beta}}
+								 	{\frac{\cos\alpha\cos\beta-\sin\alpha\sin\beta}{\cos\alpha\cos\beta}} =\\
+								 &=\frac{\frac{\sin\alpha}{\cos\alpha}+\frac{\sin\beta}{\cos\beta}}
+								 	{1+\frac{\sin\alpha\cos\beta}{\cos\alpha\cos\beta}}=\\
+								 &= \frac{\tg \alpha + \tg \beta}{1 - \tg \alpha \tg \beta}.
+		\end{align*}
+		c.n.d.
+		
+%--------------------------------------------------------------
+		\subsection{Cotangens sumy dwóch kątów}
+		\begin{equation*}
+			\ctg (\alpha + \beta) = \frac{\ctg\alpha\ctg\beta-1}{\ctg\alpha+\ctg\beta}
+		\end{equation*}
+		
+		\underline{Dowód:}\noindent
+		\begin{align*}
+			\ctg (\alpha + \beta) &= \frac{\cos(\alpha+\beta)}{\sin(\alpha + \beta)} = \\
+								  &= \frac{\cos\alpha\cos\beta-\sin\alpha\sin\beta}{\sin\alpha\cos\beta+\cos\alpha\sin\beta} =\\
+								  &= \frac{\frac{\cos\alpha\cos\beta-\sin\alpha\sin\beta}{\sin\alpha\sin\beta}} {\frac{\sin\alpha\cos\beta+\cos\alpha\sin\beta}{\sin\alpha\sin \beta}} =\\
+								  &=\frac{\frac{\cos\alpha\cos\beta}{\sin\alpha\sin\beta}-1}{\frac{\cos\beta}{\sin\beta}+\frac{\cos\alpha}{\sin\alpha}} = \\
+								  &=\frac{\ctg\alpha\ctg\beta - 1}{\ctg\alpha+\ctg\beta}.
+		\end{align*}
+		c.n.d.
+		
+%--------------------------------------------------------------
+		\subsection{Sinus różnicy dwóch kątów}
+		\begin{equation*}
+			\sin(\alpha-\beta) = \sin\alpha\cos\beta-\cos\alpha\sin\beta
+		\end{equation*}
+		
+		\underline{Dowód:}\noindent
+		\begin{align*}
+		\sin(\alpha-\beta) &= \sin(\alpha+(-\beta)) =\\
+						   &= \sin\alpha\cos(-\beta)+\cos\alpha\sin(-\beta) =\\
+						   &= \sin\alpha\cos\beta - \cos\alpha\sin\beta.\\
+		\end{align*}
+		c.n.d.
+%--------------------------------------------------------------
+		\subsection{Cosinus różnicy dwóch kątów}
+		\begin{equation*}
+			\cos(\alpha-\beta) = \cos\alpha\cos\beta + \sin\alpha\sin\beta
+		\end{equation*}
+		
+		\underline{Dowód:}\noindent
+		\begin{align*}
+		\cos(\alpha-\beta) &= \cos(\alpha+(-\beta)) =\\
+						   &= \cos\alpha\cos(-\beta) - \sin\alpha\sin(-\beta) =\\
+						   &= \cos\alpha\cos\beta + \sin\alpha\sin\beta.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Tangens różnicy dwóch kątów}
+		\begin{equation*}
+			\tg(\alpha-\beta)= \frac{\tg \alpha - \tg \beta}{1 + \tg \alpha \tg \beta}
+		\end{equation*}
+		
+		\underline{Dowód:}\noindent
+		\begin{align*}
+		\tg(\alpha-\beta) &= \tg(\alpha+(-\beta))=\\
+						  &= \frac{\tg \alpha + \tg (-\beta)}{1 - \tg \alpha \tg (-\beta)} =\\
+						  &= \frac{\tg \alpha - \tg \beta}{1 + \tg \alpha \tg \beta}.
+		\end{align*}
+		c.n.d.
+%--------------------------------------------------------------
+		\subsection{Cotangens różnicy dwóch kątów}
+		\begin{equation*}
+			\ctg (\alpha - \beta) = \frac{\ctg\alpha\ctg\beta+1}{-\ctg\alpha+\ctg\beta}
+		\end{equation*}
+		
+		\underline{Dowód:}\noindent
+		\begin{align*}
+\ctg (\alpha - \beta) &= \ctg(\alpha+(-\beta)) = \\
+					  &= \frac{\ctg\alpha\ctg(-\beta)-1}{\ctg\alpha+\ctg(-\beta)} =\\
+					  &= \frac{-\ctg\alpha\ctg\beta-1}{\ctg\alpha-\ctg\beta} =\\
+					  &= \frac{\ctg\alpha\ctg\beta+1}{-\ctg\alpha+\ctg\beta}.
+		\end{align*}
+		c.n.d.
+%--------------------------------------------------------------
+		\subsection{Sinus dwukrotności kąta}
+		\begin{equation*}
+			\sin2\alpha = 2\sin\alpha\cos\alpha
+		\end{equation*}
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\sin2\alpha &= \sin(\alpha+\alpha) =\\
+						&= \sin\alpha\cos\alpha + \cos\alpha\sin\alpha =\\
+						&= 2\sin\alpha\cos\alpha.
+		\end{align*}
+		c.n.d.
+%--------------------------------------------------------------
+		\subsection{Cosinus dwukrotności kąta}
+		\begin{equation*}
+			\cos2\alpha = \cos^2\alpha-\sin^2\alpha = 2\cos^2\alpha - 1 = 1-2\sin^2\alpha
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\cos2\alpha &= \cos(\alpha+\alpha) =\\
+						&= \cos\alpha\cos\alpha - \sin\alpha\sin\alpha =\\
+						&= \cos^2\alpha-\sin^2\alpha.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Tangens dwukrotności kąta}
+		\begin{equation*}
+			\tg2\alpha = \frac{2\tg \alpha}{1 - \tg^2 \alpha}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+		\tg2\alpha &= \tg(\alpha+\alpha)= \\
+				   &= \frac{\tg \alpha + \tg \alpha}{1 - \tg \alpha \tg \alpha} =\\
+				   &=\frac{2\tg \alpha}{1 - \tg^2 \alpha}.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Cotangens dwukrotności kąta}
+		\begin{equation*}
+			\ctg2\alpha = \frac{\ctg^2\alpha-1}{2\ctg\alpha}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\ctg2\alpha &= \ctg(\alpha+\alpha) =\\
+						&= \frac{\ctg\alpha\ctg\alpha-1}{\ctg\alpha+\ctg\alpha} =\\
+						&= \frac{\ctg^2\alpha-1}{2\ctg\alpha}.
+		\end{align*}
+		c.n.d.
+		
+%--------------------------------------------------------------
+		\subsection{Sinus trzykrotności kąta}
+		\begin{equation*}
+			\sin3\alpha = 3\sin\alpha -4\sin^3\alpha
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\sin3\alpha &= \sin(2\alpha+\alpha) = \\
+						  &= \sin2\alpha\cos\alpha+\cos 2\alpha\sin\alpha =\\
+						  &= (2\sin\alpha\cos\alpha)\cos\alpha + (\cos^2\alpha-\sin^2\alpha)\sin\alpha = \\
+						  &= 2\sin\alpha\cos^2\alpha+\cos^2\alpha\sin\alpha-\sin^3\alpha =\\
+						  &= \cos^2\alpha(3\sin\alpha) - \sin^3\alpha = \\
+						  &= (1-\sin^2\alpha)(3\sin\alpha) - \sin^3\alpha =\\
+						  &= 3\sin\alpha -4\sin^3\alpha.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Cosinus trzykrotności kąta}
+		\begin{equation*}
+			\cos3\alpha = 4\cos^3\alpha -3\cos\alpha
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\cos3\alpha &= \cos(2\alpha+\alpha) =\\
+						&= \cos2\alpha\cos\alpha - \sin2\alpha\sin\alpha = \\
+						&= (2\cos^2\alpha - 1)\cos\alpha - (2\sin\alpha\cos\alpha)\sin\alpha = \\
+						&= (2\cos^2\alpha - 1)\cos\alpha - 2\sin^2\alpha\cos\alpha =\\
+						&= (2\cos^2\alpha - 1)\cos\alpha - 2(1-\cos^2\alpha)\cos\alpha =\\
+						&= 2\cos^3\alpha - \cos\alpha - 2\cos\alpha + 2\cos^3\alpha =\\
+						&= 4\cos^3\alpha -3\cos\alpha.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Tangens trzykrotności kąta}
+		\begin{equation*}
+			\tg3\alpha = \frac{3\tg\alpha-\tg^3\alpha}{1-3\tg^2\alpha}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\tg3\alpha &= \tg(2\alpha + \alpha) = \\
+					   &= \frac{\tg2\alpha+\tg\alpha}{1-\tg2\alpha\tg\alpha} = \\
+					   &= \frac{\frac{2\tg \alpha}{1 - \tg^2 \alpha}+\tg\alpha}{1-\frac{2\tg \alpha}{1 - \tg^2 \alpha}\tg\alpha} = \\
+					   & = \frac{\frac{2\tg\alpha+\tg\alpha-\tg^3\alpha}{1-\tg^2\alpha}}{\frac{1-\tg^2\alpha - 2\tg\alpha\tg\alpha}{1-\tg^2\alpha}} =\\
+					   & = \frac{3\tg\alpha-\tg^3\alpha}{1-3\tg^2\alpha}.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Cotangens trzykrotności kąta}
+		\begin{equation*}
+			\ctg3\alpha = \frac{\ctg^3\alpha - 3\ctg\alpha}{3\ctg^2\alpha-1}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\ctg3\alpha &= \ctg(2\alpha + \alpha) = \\
+					    &= \frac{\ctg2\alpha\ctg\alpha- 1}{\ctg2\alpha+\ctg\alpha} = \\
+					   	&= \frac{\frac{\ctg^2\alpha-1}{2\ctg\alpha}\ctg\alpha- 1}{\frac{\ctg^2\alpha-1}{2\ctg\alpha}+\ctg\alpha} = \\
+					   	&= \frac{\frac{(\ctg^2\alpha-1)\ctg\alpha-2\ctg\alpha}{2\ctg\alpha}}{\frac{\ctg^2\alpha-1+2\ctg^2\alpha}{2\ctg\alpha}} =\\
+					   	&=\frac{(\ctg^2\alpha-1)\ctg\alpha-2\ctg\alpha}{\ctg^2\alpha-1+2\ctg^2\alpha} =\\
+					   	&=\frac{\ctg^3\alpha-\ctg\alpha-2\ctg\alpha}{3\ctg^2\alpha-1} =\\
+					   	&= \frac{3\tg\alpha-\tg^3\alpha}{1-3\tg^2\alpha}.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Sinus kąta połówkowego}
+		\begin{equation*}
+			\sin\frac{\alpha}{2} = \pm \sqrt{\frac{1-\cos\alpha}{2}}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			&\cos 2\alpha = 1 - 2\sin^2\alpha\\
+			&\sin\alpha = \pm \sqrt{\frac{1-\cos2\alpha}{2}}
+		\end{align*}
+		
+		Zatem
+		\begin{align*}
+			\sin\frac{\alpha}{2} = \pm \sqrt{\frac{1-\cos\alpha}{2}}.
+		\end{align*}
+		c.n.d.
+		
+%--------------------------------------------------------------
+		\subsection{Cosinus kąta połówkowego}
+		\begin{equation*}
+			\cos\frac{\alpha}{2} = \pm \sqrt{\frac{1+\cos\alpha}{2}}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			&\cos 2\alpha = 2\cos^2\alpha - 1\\
+			&\cos\alpha = \pm \sqrt{\frac{1+\cos2\alpha}{2}}
+		\end{align*}
+		Zatem
+		\begin{align*}
+			\cos\frac{\alpha}{2} = \pm \sqrt{\frac{1+\cos\alpha}{2}}
+		\end{align*}
+		c.n.d.
+		
+%--------------------------------------------------------------
+		\subsection{Tangens kąta połówkowego}
+		\begin{equation*}
+			\tg\frac{\alpha}{2} = \pm \sqrt{\frac{1-\cos\alpha}{1+\cos\alpha}}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\tg\frac{\alpha}{2} &= \frac{\sin\frac{\alpha}{2}}{\cos\frac{\alpha}{2}} =\\
+								&= \frac{\pm \sqrt{\frac{1-\cos\alpha}{2}}}{\pm \sqrt{\frac{1+\cos\alpha}{2}}} =\\
+								&= \pm \sqrt{\frac{1-\cos\alpha}{1+\cos\alpha}}.
+		\end{align*}
+		c.n.d.
+
+%--------------------------------------------------------------
+		\subsection{Cotangens kąta połówkowego}
+		\begin{equation*}
+			\ctg\frac{\alpha}{2} = \pm \sqrt{\frac{1+\cos\alpha}{1-\cos\alpha}}
+		\end{equation*}
+		
+		\underline{Dowód:} \noindent
+		\begin{align*}
+			\ctg\frac{\alpha}{2} &= \frac{\cos\frac{\alpha}{2}}{\sin\frac{\alpha}{2}} =\\
+								 &= \frac{\pm \sqrt{\frac{1+\cos\alpha}{2}}}{\pm \sqrt{\frac{1-\cos\alpha}{2}}} =\\
+								 &= \pm \sqrt{\frac{1+\cos\alpha}{1-\cos\alpha}}.
+		\end{align*}
+		c.n.d.
+		
+\newpage
+\section{Podsumowanie}
+	\begin{align*}
+		&\sin (\alpha +\beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta\\
+		&\cos (\alpha + \beta) = \cos\alpha\cos\beta - \sin\alpha\sin\beta\\
+		&\tg (\alpha + \beta) = \frac{\tg \alpha + \tg \beta}{1 - \tg \alpha \tg \beta}\\
+		&\ctg (\alpha + \beta) = \frac{\ctg\alpha\ctg\beta-1}{\ctg\alpha+\ctg\beta}
+	\end{align*}
+	
+	
+	\noindent\rule{10cm}{0.4pt}
+	\begin{align*}
+		&\sin(\alpha-\beta) = \sin\alpha\cos\beta-\cos\alpha\sin\beta\\
+		&\cos(\alpha-\beta) = \cos\alpha\cos\beta + \sin\alpha\sin\beta\\
+		&\tg(\alpha-\beta)= \frac{\tg \alpha - \tg \beta}{1 + \tg \alpha \tg \beta}\\
+		&\ctg (\alpha - \beta) = \frac{\ctg\alpha\ctg\beta+1}{-\ctg\alpha+\ctg\beta}
+	\end{align*}
+	
+	\noindent\rule{10cm}{0.4pt}
+	\begin{align*}
+		&\sin2\alpha = 2\sin\alpha\cos\alpha\\
+		&\cos2\alpha = \cos^2\alpha-\sin^2\alpha = 2\cos^2\alpha - 1 = 1-2\sin^2\alpha\\
+		&\tg2\alpha = \frac{2\tg \alpha}{1 - \tg^2 \alpha}\\
+		&\ctg2\alpha = \frac{\ctg^2\alpha-1}{2\ctg\alpha}
+	\end{align*}
+		
+	\noindent\rule{10cm}{0.4pt}
+	\begin{align*}
+		&\sin3\alpha = 3\sin\alpha -4\sin^3\alpha\\
+		&\cos3\alpha = 4\cos^3\alpha -3\cos\alpha\\
+		&\tg3\alpha = \frac{3\tg\alpha-\tg^3\alpha}{1-3\tg^2\alpha}\\
+		&\ctg3\alpha = \frac{\ctg^3\alpha - 3\ctg\alpha}{3\ctg^2\alpha-1}
+	\end{align*}
+	
+	\noindent\rule{10cm}{0.4pt}
+	\begin{align*}
+		&\sin\frac{\alpha}{2} = \pm \sqrt{\frac{1-\cos\alpha}{2}}\\
+		&\cos\frac{\alpha}{2} = \pm \sqrt{\frac{1+\cos\alpha}{2}}\\
+		&\tg\frac{\alpha}{2} = \pm \sqrt{\frac{1-\cos\alpha}{1+\cos\alpha}}\\
+		&\ctg\frac{\alpha}{2} = \pm \sqrt{\frac{1+\cos\alpha}{1-\cos\alpha}}
+	\end{align*}
+	
+	
+\end{document}
